@@ -1,6 +1,9 @@
 export default async function handler(req, res) {
   try {
-    const targetUrl = `http://129.151.230.246:9000${req.url}`;
+    // req.query.path is an array of all path segments after /api/proxy
+    const path = req.query.path ? '/' + req.query.path.join('/') : '';
+    const targetUrl = `http://129.151.230.246:9000${path}`;
+
     const response = await fetch(targetUrl);
     const buffer = await response.arrayBuffer();
 
